@@ -1,0 +1,104 @@
+.container {
+    display: flex;
+    padding: 10px;
+    margin: auto;
+    margin-top: 50px;
+    justify-content: space-around;
+    align-items: center;
+  }
+  
+  .imageContainer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    max-width: 50%;
+  }
+  .imageContainer img {
+    width: 500px;
+  }
+  
+  form {
+    display: flex;
+    flex-direction: column;
+    width: 50%;
+    margin-left: 60px;
+  }
+  
+  form h2 {
+    text-align: center;
+    font-weight: 500;
+    font-family: "Montserrat", sans-serif;
+    font-size: 2.5rem;
+    text-transform: uppercase;
+    margin: 30px;
+  }
+  
+  form input {
+    padding: 12px;
+    margin: 15px;
+    border: 1px solid #ebecf0;
+    outline: none;
+    border-radius: 20px;
+    background: #ebecf0;
+    font-family: "Montserrat", sans-serif;
+    font-size: 16px;
+  }
+  
+  form input::placeholder {
+    color: black;
+  }
+  
+  .btn-primary {
+    background-color: #fe725b;
+    text-transform: uppercase;
+  }
+  
+  form button {
+    padding: 12px 30px;
+    width: 40%;
+    background-color: black;
+    color: whitesmoke;
+    font-weight: bold;
+    border: none;
+    outline: none;
+    margin: 15px 12px;
+    font-family: "Montserrat", sans-serif;
+    text-transform: capitalize;
+    font-size: 15px;
+  }
+  
+  form button .icon {
+    font-size: 18px;
+    margin-right: 7px;
+  }
+  
+  form button:hover {
+    cursor: pointer;
+    background-color: #ef0f1c;
+    transition: all 0.03ms ease-in-out;
+  }
+  
+  .btn-primary:hover {
+    cursor: pointer;
+    background-color: black;
+    transition: all 0.03ms ease-in-out;
+  }
+  
+  .links {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    margin-top: 40px;
+  }
+  
+  .links #linkText {
+    color: black;
+    text-transform: capitalize;
+    font-family: "Montserrat", sans-serif;
+  }
+  
+  .links #linkText:hover {
+    color: #ef0f1c;
+    text-decoration: underline;
+    transition: all 0.002ms ease-in-out;
+  }

@@ -9,12 +9,12 @@ function App() {
     <>
     <BrowserRouter>
       <NavigationBar />
-      <MobileNavigation />
+      {/* <MobileNavigation /> */}
       <Routes>
         <Route path="/" element={<Home />}/>
         <Route path="/login" element={<Login />}/>
         <Route path="/register" element={<Register />}/>
-        <Route path="/reset" element={<Reset />}/>
+       <Route path="/reset" element={ <Reset />}/>
       </Routes>
     </BrowserRouter>
     </>

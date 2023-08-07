@@ -1,6 +1,5 @@
 import React, { useEffect } from 'react';
 import './MobileNavigation.css';
-import { Link } from 'react-router-dom';
 import {MdOutlineAccountBalanceWallet} from "react-icons/md"
 import {VscAccount} from "react-icons/vsc"
 import {IoMdAdd} from "react-icons/io"
