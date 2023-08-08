@@ -54,8 +54,8 @@ function NavigationBar() {
           <NavLink to="/login" className={activeLink}>Login</NavLink>
         </li>
         
-        <li className="nav-btn" onClick={hideMenu}>
-          <NavLink to ="/addExpense" className="btn btn-orange">Add Expense</NavLink>
+        <li onClick={hideMenu}>
+          <NavLink to ="/addExpense" className="btn-orange">Add Expense</NavLink>
         </li>
         <li onClick={hideMenu}>
           <NavLink to="/register" className={activeLink}>Register</NavLink>

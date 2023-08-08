@@ -62,28 +62,28 @@
     align-items: center;
   }
   
-  Link.btn {
-    border-radius: 15px;
-    font-weight: 500;
-    padding: 5px 8px;
+  .btn-orange {
+    padding: 15px 25px;
+    border: 1px solid whitesmoke;
+    border-radius: 5px;
+    font-size: 20px;
   }
-  Link.btn-orange {
-    border: transparent;
-    background: linear-gradient( #D3D636, #00860F);
-    transition: all 0.2s;
-  }
-  
-  Link.btn-orange:hover {
-    color: white;
-    padding: 8px 10px;
+
+  .btn-orange:hover {
+    background: linear-gradient( #d3d636, #00860f);
+    transition: all 0.5s ease-in-out;
+    border: none;
   }
   
-  @media screen and (max-width: 805px) {
-    .nav-btn {
+ @media screen and (max-width: 768px) {
+    .logo {
       display: none;
     }
+    
   }
   @media screen and (max-width: 600px) {
+
+
     .nav-btn {
       display: block;
     }
@@ -97,6 +97,7 @@
     .navbar .menu-icons {
       display: block;
       cursor: pointer;
+
     }
   
     .navbar #mobile-nav-links,
@@ -104,7 +105,7 @@
       display: block;
       position: absolute;
       left: 0;
-      top: 4rem;
+      top: 5rem;
       width: 89.1%;
       background: #020420;
       padding-bottom: 5px;
@@ -165,3 +166,5 @@
       border-bottom: none;
     }
   }
+
+ 
