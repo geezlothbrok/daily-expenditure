@@ -115,7 +115,21 @@
     .navbar #mobile-nav-links {
       animation: slide-in 0.5s ease-in-out;
     }
-  
+
+    .active {
+      position: relative;
+      color: red;
+    }
+    
+    .active::after {
+      content: "";
+      position: absolute;
+      left: 0;
+      bottom: -3px;
+      width: 100%;
+      height: 2px;
+      background-color: #fff;
+    }
     .navbar #hide-mobile-nav-links {
       left: -100%;
       /* animation: slide-out 0.5s ease-in-out; */

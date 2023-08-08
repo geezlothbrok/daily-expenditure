@@ -3,12 +3,10 @@ import { FcGoogle } from "react-icons/fc";
 import { Link, useNavigate } from "react-router-dom";
 import registerImg from "../../images/signup.jpg";
 import "./Login.css";
-
-import { ToastContainer, toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
-import { createUserWithEmailAndPassword } from 'firebase/auth';
+import { GoogleAuthProvider, createUserWithEmailAndPassword, signInWithPopup } from 'firebase/auth';
 import { auth } from '../../firebase/config';
 import Loader from '../../components/loader/Loader';
+import { toast } from 'react-toastify';
 
 
 function Register() {
@@ -42,9 +40,24 @@ function Register() {
     setIsLoading(false);
   });
   };
+
+   //SIGNUP WITH GOOGLE
+
+   const provider = new GoogleAuthProvider();
+   const signInWithGoogle = () => {
+     signInWithPopup(auth, provider)
+       .then((result) => {
+         const user = result.user;
+         toast.success("Login Successful");
+         navigate("/");
+       })
+       .catch((error) => {
+         toast.error(error.message);
+       });
+   };
   return (
     <>
-     <ToastContainer />
+   
      {isLoading && <Loader />}
          <div className="container">
       <div className="imageContainer">
@@ -90,7 +103,7 @@ function Register() {
           register
         </button>
         <button type="button">
-          <FcGoogle className="icon" /> sign up with google
+          <FcGoogle className="icon" onClick={signInWithGoogle}/> sign up with google
         </button>
         <span className="links">
           <Link to="/login" id="linkText">

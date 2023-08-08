@@ -1,12 +1,16 @@
 import React, { useState } from 'react';
 import { HiMenuAlt2, HiUserCircle } from "react-icons/hi";
 import { RxCross1 } from "react-icons/rx";
-import { Link } from 'react-router-dom';
-import "./NavigationBar.css"
+import { NavLink, useNavigate } from 'react-router-dom';
+import "./NavigationBar.css";
+import { signOut } from "firebase/auth";
+import { auth } from '../../firebase/config';
+import { toast } from 'react-toastify';
 
 function NavigationBar() {
 
     const [showMenu, setShowMenu] = useState(false)
+
     const toggleMenu = () => {
       setShowMenu(!showMenu)
     }
@@ -20,7 +24,21 @@ function NavigationBar() {
     </div>
     );
 
+    const activeLink = ({isActive}) => (isActive ? "active" : "");
+    const navigate = useNavigate();
+
+    const logoutUser = () => {
+      signOut(auth).then(() => {
+       toast.success("Logot successful");
+       navigate("/login");
+      }).catch((error) => {
+       toast.error(error.message)
+      });
+    };
+
   return (
+    <>
+
     <nav className="container navbar">
         {logo}
 
@@ -33,10 +51,17 @@ function NavigationBar() {
         </li>
 
         <li onClick={hideMenu}>
-          <Link to="/login">Login</Link>
+          <NavLink to="/login" className={activeLink}>Login</NavLink>
         </li>
+        
         <li className="nav-btn" onClick={hideMenu}>
-          <Link to ="/addExpense" className="btn btn-orange">Add Expense</Link>
+          <NavLink to ="/addExpense" className="btn btn-orange">Add Expense</NavLink>
+        </li>
+        <li onClick={hideMenu}>
+          <NavLink to="/register" className={activeLink}>Register</NavLink>
+        </li>
+        <li onClick={hideMenu}>
+          <NavLink to="/login" onClick={logoutUser}>Logout</NavLink>
         </li>
       </ul>
     </menu>
@@ -50,6 +75,7 @@ function NavigationBar() {
       
     </div>
   </nav>
+  </>
   )
 }
 
