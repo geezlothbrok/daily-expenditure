@@ -6,6 +6,8 @@ import "./NavigationBar.css";
 import { onAuthStateChanged, signOut } from "firebase/auth";
 import { auth } from '../../firebase/config';
 import { toast } from 'react-toastify';
+import { useDispatch } from 'react-redux';
+import { SET_ACTIVE_USER } from '../../redux/slice/authSlice';
 
 function NavigationBar() {
 
@@ -19,6 +21,8 @@ function NavigationBar() {
       setShowMenu(false)
     }
 
+    const dispatch = useDispatch();
+
     const logo = (
         <div className="logo">
       <p className="logo-text">Expenses Manager</p>
@@ -28,6 +32,8 @@ function NavigationBar() {
     const activeLink = ({isActive}) => (isActive ? "active" : "");
     const navigate = useNavigate();
 
+
+      // LOG A USER OUT
     const logoutUser = () => {
       signOut(auth).then(() => {
        toast.success("Logot successful");
@@ -44,7 +50,13 @@ function NavigationBar() {
         if (user) {
           const uid = user.uid;
           console.log(user.displayName);
-          setDisplayName(user.displayName)
+          setDisplayName(user.displayName);
+
+          dispatch(SET_ACTIVE_USER({
+            email: user.email,
+            userName: user.displayName,
+            userID: user.uid,
+          }));
          
         } else {
           setDisplayName("")
