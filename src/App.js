@@ -5,6 +5,7 @@ import { Home, Login, Register, Reset } from './pages';
 import MobileNavigation from './components/nav/MobileNavigation';
 import { ToastContainer,} from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import AddExpenditure from './pages/AddExpenditure';
 
 function App() {
   return (
@@ -19,6 +20,7 @@ function App() {
         <Route path="/login" element={<Login />}/>
         <Route path="/register" element={<Register />}/>
        <Route path="/reset" element={ <Reset />}/>
+       <Route path="/addExpense" element={ <AddExpenditure />}/>
       </Routes>
     </BrowserRouter>
     </>

@@ -1,15 +1,16 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { HiMenuAlt2, HiUserCircle } from "react-icons/hi";
 import { RxCross1 } from "react-icons/rx";
 import { NavLink, useNavigate } from 'react-router-dom';
 import "./NavigationBar.css";
-import { signOut } from "firebase/auth";
+import { onAuthStateChanged, signOut } from "firebase/auth";
 import { auth } from '../../firebase/config';
 import { toast } from 'react-toastify';
 
 function NavigationBar() {
 
     const [showMenu, setShowMenu] = useState(false)
+    const [displayName, setDisplayName] = useState("")
 
     const toggleMenu = () => {
       setShowMenu(!showMenu)
@@ -36,6 +37,23 @@ function NavigationBar() {
       });
     };
 
+
+    // MONITOR CURRENTLY SIGNED IN USER
+    useEffect(() => {
+      onAuthStateChanged(auth, (user) => {
+        if (user) {
+          const uid = user.uid;
+          console.log(user.displayName);
+          setDisplayName(user.displayName)
+         
+        } else {
+          setDisplayName("")
+        }
+      });
+      
+    }, [])
+    
+
   return (
     <>
 
@@ -47,7 +65,7 @@ function NavigationBar() {
         
         <li className="user-icon"  onClick={hideMenu}>
           <HiUserCircle color="white" size={25} />
-          {/* <span>Hi, User</span> */}
+          <span>Hi, {displayName}</span>
         </li>
 
         <li onClick={hideMenu}>
