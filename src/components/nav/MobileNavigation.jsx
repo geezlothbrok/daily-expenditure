@@ -5,8 +5,12 @@ import {VscAccount} from "react-icons/vsc"
 import {IoMdAdd} from "react-icons/io"
 import {PiChartLineUp} from "react-icons/pi"
 import {RiHome4Line} from "react-icons/ri"
+import { useSelector } from 'react-redux';
+import { selectIsLoggedIn } from '../../redux/slice/authSlice';
 
 function MobileNavigation() {
+
+  const protectedMobileNav = useSelector( selectIsLoggedIn);
   
   useEffect(() => {
     const menuLi = document.querySelectorAll("#menu li");
@@ -22,7 +26,7 @@ function MobileNavigation() {
 
     
     
-      <div className="bottomMenu">
+      <div className={protectedMobileNav ? "bottomMenu" : ""}>
         
           <ul id='menu'>
             <li>

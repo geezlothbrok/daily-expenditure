@@ -6,10 +6,11 @@ import "./NavigationBar.css";
 import { onAuthStateChanged, signOut } from "firebase/auth";
 import { auth } from "../../firebase/config";
 import { toast } from "react-toastify";
-import { useDispatch, } from "react-redux";
+import { useDispatch, useSelector, } from "react-redux";
 import {
   REMOVE_ACTIVE_USER,
   SET_ACTIVE_USER,
+  selectIsLoggedIn,
   
 } from "../../redux/slice/authSlice";
 import ShowOnLogin, { ShowOnLogedOut } from "../hiddenLink/HiddenLinks";
@@ -28,6 +29,7 @@ function NavigationBar() {
 
 
   const dispatch = useDispatch();
+  const protectedRoute = useSelector( selectIsLoggedIn);
 
   const logo = (
     <div className="logo">
@@ -106,8 +108,8 @@ function NavigationBar() {
               </ShowOnLogedOut>
             </li>
 
-            <li onClick={ hideMenu} >
-                <NavLink to="/addExpense" className="btn-orange">
+            <li onClick={ hideMenu}>
+                <NavLink to={ protectedRoute ? "/addExpense" : "/login"} className="btn-orange">
                 Add Expense
               </NavLink>
             </li>
