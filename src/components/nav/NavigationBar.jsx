@@ -6,11 +6,14 @@ import "./NavigationBar.css";
 import { onAuthStateChanged, signOut } from "firebase/auth";
 import { auth } from "../../firebase/config";
 import { toast } from "react-toastify";
-import { useDispatch } from "react-redux";
+import { useDispatch, } from "react-redux";
 import {
   REMOVE_ACTIVE_USER,
   SET_ACTIVE_USER,
+  
 } from "../../redux/slice/authSlice";
+import ShowOnLogin, { ShowOnLogedOut } from "../hiddenLink/HiddenLinks";
+
 
 function NavigationBar() {
   const [showMenu, setShowMenu] = useState(false);
@@ -23,6 +26,7 @@ function NavigationBar() {
     setShowMenu(false);
   };
 
+
   const dispatch = useDispatch();
 
   const logo = (
@@ -33,6 +37,9 @@ function NavigationBar() {
 
   const activeLink = ({ isActive }) => (isActive ? "active" : "");
   const navigate = useNavigate();
+    
+  
+ 
 
   // LOG A USER OUT
   const logoutUser = () => {
@@ -50,7 +57,7 @@ function NavigationBar() {
   useEffect(() => {
     onAuthStateChanged(auth, (user) => {
       if (user) {
-        const uid = user.uid;
+        // const uid = user.uid;
         // console.log(user.displayName);
 
         if (user.displayName == null) {
@@ -72,7 +79,7 @@ function NavigationBar() {
         dispatch(REMOVE_ACTIVE_USER());
       }
     });
-  }, []);
+  }, [dispatch, displayName]);
 
   return (
     <>
@@ -84,31 +91,33 @@ function NavigationBar() {
             className="nav-links fixed"
             id={showMenu ? "mobile-nav-links" : "hide-mobile-nav-links"}
           >
+            <ShowOnLogin>
             <li className="user-icon" onClick={hideMenu}>
               <HiUserCircle color="white" size={25} />
               <span>Hi, {displayName}</span>
             </li>
+            </ShowOnLogin>
 
             <li onClick={hideMenu}>
+              <ShowOnLogedOut>
               <NavLink to="/login" className={activeLink}>
                 Login
               </NavLink>
+              </ShowOnLogedOut>
             </li>
 
-            <li onClick={hideMenu}>
-              <NavLink to="/addExpense" className="btn-orange">
+            <li onClick={ hideMenu} >
+                <NavLink to="/addExpense" className="btn-orange">
                 Add Expense
               </NavLink>
             </li>
+            
             <li onClick={hideMenu}>
-              <NavLink to="/register" className={activeLink}>
-                Register
-              </NavLink>
-            </li>
-            <li onClick={hideMenu}>
+              <ShowOnLogin>
               <NavLink to="/login" onClick={logoutUser}>
                 Logout
               </NavLink>
+              </ShowOnLogin>
             </li>
           </ul>
         </menu>
