@@ -13,8 +13,24 @@ function AddExpenditure() {
 
   const saveExpense = (e) => {
     e.preventDefault();
-   console.log("hello");
-   
+
+    if (itemOrService === "") {
+      toast.error("Please Enter the purpose for this expense");
+      return false
+    } 
+    else if (expenseAmount === "") {
+      toast.error("Enter a value for amount");
+      return false;
+    } else if (category === "") {
+      toast.error("Please choose a category");
+      return false;
+    } else if (notes === "") {
+      toast.error("Please add a note for description");
+      return false;
+    } else if (expenseDate === "") {
+      toast.error("Please add a date")
+    }
+    return true
   };
 
   return (
@@ -25,7 +41,7 @@ function AddExpenditure() {
           <h5>Display your daily expenses Total here</h5>
         </div>
 
-        <form action="" className='addExpenseForm' onSubmit="return checkform()">
+        <form  className='addExpenseForm' onSubmit={saveExpense}>
           <label htmlFor="">Item Purchased or Service</label>
           <input type="text" name='itemOrService' placeholder='Please key in your purchased item or services here' inputMode='text'
            value={itemOrService} onChange={(e) => setItemOrService(e.target.value)}/>
