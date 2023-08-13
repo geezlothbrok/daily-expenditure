@@ -1,21 +1,29 @@
 import React from 'react'
 import { useState } from 'react';
 import { toast } from 'react-toastify';
+import Loader from '../components/loader/Loader';
+import { db } from '../firebase/config';
+import { addDoc, collection } from 'firebase/firestore';
+import { useNavigate } from 'react-router-dom';
 
 function AddExpenditure() {
 
 
   const [itemOrService, setItemOrService] = useState("");
-  const [expenseDate, setExpenseDate] = useState("");
+  const [expenseDate, setExpenseDate] = useState(0);
   const [expenseAmount, setExpenseAmount] = useState("");
   const [category, setCategory] = useState("");
   const [notes, setNotes] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
 
-  const saveExpense = (e) => {
+  const expensesCollectionRef = collection(db, "expenses");
+  const navigate = useNavigate();
+
+  const saveExpense =  (e) => {
     e.preventDefault();
 
     if (itemOrService === "") {
-      toast.error("Please Enter the purpose for this expense");
+      toast.error("Please Enter empty fiels");
       return false
     } 
     else if (expenseAmount === "") {
@@ -30,10 +38,27 @@ function AddExpenditure() {
     } else if (expenseDate === "") {
       toast.error("Please add a date")
     }
-    return true
+    // return true
+    setIsLoading(true);
   };
 
+  const createAnExpense = async () => {
+    await addDoc(expensesCollectionRef,{ title: itemOrService,
+    expenseDate,
+  expenseAmount,
+notes,
+category});
+setIsLoading(false);
+toast.success("Today's expenses added successfully");
+navigate("/");
+
+  };
+
+  
+
   return (
+    <>
+    {isLoading && <Loader />}
     <div className='addExpensesContainer'>
         <h3 id='addTitle'>Add Expenses</h3>
         
@@ -51,7 +76,7 @@ function AddExpenditure() {
 
           <label htmlFor="">Amount</label>
           <input type="number" name='expenseAmount' inputMode='numeric' value={expenseAmount}
-           onChange={(e) => setExpenseAmount(e.target.value)} />
+           onChange={(e) => setExpenseAmount(Number(e.target.value))} />
 
           <label htmlFor="">Note</label>
          <textarea name="expenseNote" id="" cols="30" rows="10"placeholder='Add your Notes here...' value={notes}
@@ -62,15 +87,20 @@ function AddExpenditure() {
                     <select name="category" value={category} onChange={(e) => setCategory(e.target.value)}>
                         <option value="" disabled>Select</option>
                         <option value="food and drinks">Food and Drinks</option>
-                        <option value="accommodation">Accommodation</option>
+                        <option value="maintenance">Maintenance</option>
                         <option value="transportation">transportation</option>
                         <option value="house and rent">House and Rent</option>
                         <option value="miscellaneous">Miscellaneous</option>
+                        <option value="fashion">Fashion</option>
+                        <option value="education">Education</option>
+                        <option value="health">Health</option>
+                        <option value="utilities">Utilities</option>
 
                     </select>
-                    <button type="submit" onClick={saveExpense}>Save</button>
+                    <button type="submit" onClick={createAnExpense}>Save</button>
         </form>
     </div>
+    </>
   )
 }
 
