@@ -6,6 +6,8 @@ import { db } from "../firebase/config";
 import { addDoc, collection } from "firebase/firestore";
 import { useNavigate } from "react-router-dom";
 
+import "./AddExpenditure.css"
+
 function AddExpenditure() {
   const [itemOrService, setItemOrService] = useState("");
   const [expenseDate, setExpenseDate] = useState("");
@@ -17,9 +19,12 @@ function AddExpenditure() {
   const expensesCollectionRef = collection(db, "expenses");
   const navigate = useNavigate();
 
-  //VALIDATING ALL INPUT FIELDS
-  const saveExpense = (e) => {
+  
+
+  const createAnExpense = async (e) => {
     e.preventDefault();
+
+     //VALIDATING ALL INPUT FIELDS
 
     if (itemOrService === "") {
       toast.error("Please Enter empty fiels");
@@ -36,14 +41,11 @@ function AddExpenditure() {
     } else if (expenseDate === "") {
       toast.error("Please add a date");
     }
-    // return true
+    
     setIsLoading(true);
-  };
 
+    //ADDING EXPENSES TO THE FIRESTORE DATA BASE
 
-  //ADDING EXPENSES TO THE FIRESTORE DATA BASE
-
-  const createAnExpense = async () => {
     await addDoc(expensesCollectionRef, {
       title: itemOrService,
       expenseDate,
@@ -51,8 +53,9 @@ function AddExpenditure() {
       notes,
       category,
     });
-    setIsLoading(false);
+    setIsLoading(true);
     toast.success("Today's expenses added successfully");
+    setIsLoading(false)
     navigate("/");
   };
 
@@ -63,10 +66,11 @@ function AddExpenditure() {
         <h3 id="addTitle">Add Expenses</h3>
 
         <div className="expensesTotal">
-          <h5>Display your daily expenses Total here</h5>
+          <h5>GHc 300. 00</h5>
+          <span> spent today</span>
         </div>
 
-        <form className="addExpenseForm" onSubmit={saveExpense}>
+        <form className="addExpenseForm" onSubmit={createAnExpense}>
           <label>Item Purchased or Service</label>
           <input
             type="text"
@@ -105,15 +109,13 @@ function AddExpenditure() {
             onChange={(e) => setNotes(e.target.value)}
           ></textarea>
 
-          <label>Category</label>
-
           <select
             name="category"
             value={category}
             onChange={(e) => setCategory(e.target.value)}
           >
             <option value="" disabled>
-              Select
+              Choose Category
             </option>
             <option value="food and drinks">Food and Drinks</option>
             <option value="maintenance">Maintenance</option>
@@ -125,8 +127,8 @@ function AddExpenditure() {
             <option value="health">Health</option>
             <option value="utilities">Utilities</option>
           </select>
-          <button type="submit" onClick={createAnExpense}>
-            Save
+          <button type="submit" onClick={createAnExpense} id="submit">
+            S a v e
           </button>
         </form>
       </div>
