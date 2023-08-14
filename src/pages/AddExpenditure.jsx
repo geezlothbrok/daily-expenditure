@@ -27,7 +27,7 @@ function AddExpenditure() {
      //VALIDATING ALL INPUT FIELDS
 
     if (itemOrService === "") {
-      toast.error("Please Enter empty fiels");
+      toast.error("Please Enter empty fields");
       return false;
     } else if (expenseAmount === "") {
       toast.error("Enter a value for amount");
@@ -89,7 +89,7 @@ function AddExpenditure() {
             onChange={(e) => setExpenseDate(e.target.value)}
           />
 
-          <label>Amount</label>
+          <label>Amount GHc</label>
           <input
             type="number"
             name="expenseAmount"
@@ -110,11 +110,9 @@ function AddExpenditure() {
           ></textarea>
 
           <select
-            name="category"
-            value={category}
-            onChange={(e) => setCategory(e.target.value)}
-          >
-            <option value="" disabled>
+            name="category" >
+            <option  value={category}
+            onChange={(e) => setCategory(e.target.value)} disabled>
               Choose Category
             </option>
             <option value="food and drinks">Food and Drinks</option>
