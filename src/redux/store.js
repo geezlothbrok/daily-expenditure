@@ -1,9 +1,11 @@
 import { configureStore, combineReducers } from "@reduxjs/toolkit";
 import authReducer from "./slice/authSlice";
+import addNewReducer from "./slice/addNewSlice";
 
 const rootReducer = combineReducers(
     {
-        auth: authReducer
+        auth: authReducer,
+        addNew: addNewReducer,
     }
 )
 

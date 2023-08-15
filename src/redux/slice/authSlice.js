@@ -8,7 +8,7 @@ userID: null,
 };
 
 
-const authSlice = createSlice({
+const authSlice = createSlice({ 
     name: "auth",
     initialState,
     reducers: {
