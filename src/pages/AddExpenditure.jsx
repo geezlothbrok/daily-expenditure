@@ -109,10 +109,8 @@ function AddExpenditure() {
             onChange={(e) => setNotes(e.target.value)}
           ></textarea>
 
-          <select
-            name="category" >
-            <option  value={category}
-            onChange={(e) => setCategory(e.target.value)} disabled>
+          <select name="category" value={category} onChange={(e) => setCategory(e.target.value)} >
+            <option value="" disabled>
               Choose Category
             </option>
             <option value="food and drinks">Food and Drinks</option>
