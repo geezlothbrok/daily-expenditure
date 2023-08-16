@@ -29,7 +29,7 @@ function AddExpenditure() {
     if (itemOrService === "") {
       toast.error("Please Enter empty fields");
       return false;
-    } else if (expenseAmount === "") {
+    } else if (expenseAmount <= 0) {
       toast.error("Enter a value for amount");
       return false;
     } else if (category === "") {
@@ -122,6 +122,7 @@ function AddExpenditure() {
             <option value="education">Education</option>
             <option value="health">Health</option>
             <option value="utilities">Utilities</option>
+            <option value="electronics">Electronics</option>
           </select>
           <button type="submit" onClick={createAnExpense} id="submit">
             S a v e

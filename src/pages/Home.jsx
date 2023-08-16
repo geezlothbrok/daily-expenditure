@@ -1,10 +1,14 @@
 import React from 'react'
+import FetchData from '../components/FetchData';
+import "./Home.css"
 
-function Home() {
+function Home({title}) {
   return (
-    <div>
-      <h2>Home Page</h2>
+    <>
+    <div className='expenseListContainer'>
+        <FetchData/>
     </div>
+    </>
   )
 }
 

@@ -1,0 +1,39 @@
+.allContainer {
+    display: flex;
+    justify-content: center;
+    /* align-items: center; */
+    flex-direction: column;
+     margin-left: auto;
+    margin-right: auto;
+}
+
+#listGap, .twoButtons {
+    margin: 20px;
+}
+
+.lists {
+    margin-bottom: 20px;
+    margin-top: 10px;
+    /* background: red; */
+
+}
+
+.editButton {
+    margin-right: 20px;
+    padding: 10px 20px;
+    background: goldenrod;
+    border-radius: 5px;
+}
+
+.deleteButton {
+    padding: 10px 20px;
+   
+}
+
+.title {
+    background: #020420;
+    padding: 10px 20px;
+    color: whitesmoke;
+    margin-bottom: 20px;
+    border-radius: 4px;
+}
