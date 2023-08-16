@@ -5,35 +5,45 @@
     flex-direction: column;
      margin-left: auto;
     margin-right: auto;
+    border-left: 1px sold black;
 }
 
 #listGap, .twoButtons {
-    margin: 20px;
+    margin: 10px;
 }
 
 .lists {
-    margin-bottom: 20px;
+    margin-bottom: 5px;
     margin-top: 10px;
-    /* background: red; */
-
+    background: linear-gradient(to left, whitesmoke, #BB7DB3);
+    border-radius: 5px;
 }
 
 .editButton {
     margin-right: 20px;
     padding: 10px 20px;
-    background: goldenrod;
+    background: gold;
     border-radius: 5px;
+    color: whitesmoke;
+    text-transform: uppercase;
+    font-family: "Montserrat", sans-serif;
+    border: none;
+    cursor: pointer;
 }
 
 .deleteButton {
     padding: 10px 20px;
-   
+    border-radius: 5px;
+    background: red;
+    color: whitesmoke;
+    text-transform: uppercase;
+    font-family: "Montserrat", sans-serif;
+    border: none;
+    cursor: pointer;
 }
 
+
 .title {
-    background: #020420;
-    padding: 10px 20px;
-    color: whitesmoke;
-    margin-bottom: 20px;
-    border-radius: 4px;
+    font-size: 23px;
+   
 }

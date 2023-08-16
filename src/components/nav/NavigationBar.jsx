@@ -113,6 +113,11 @@ function NavigationBar() {
                 Add Expense
               </NavLink>
             </li>
+            <li onClick={ hideMenu}>
+                <NavLink to="/">
+                Home
+              </NavLink>
+            </li>
             
             <li onClick={hideMenu}>
               <ShowOnLogin>

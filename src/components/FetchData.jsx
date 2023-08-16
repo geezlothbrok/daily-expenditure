@@ -1,7 +1,10 @@
-import { collection, getDocs } from "firebase/firestore";
+import { collection, deleteDoc, doc, getDocs } from "firebase/firestore";
 import React, { useEffect, useState } from "react";
 import { db } from "../firebase/config";
 import "./FetchData.css";
+import { MdEdit} from "react-icons/md";
+import {RiDeleteBin6Line} from "react-icons/ri"
+import { toast } from "react-toastify";
 
 function FetchData() {
   const [expenses, setExpenses] = useState([]);
@@ -17,6 +20,12 @@ function FetchData() {
     getAllExpenses();
   }, []);
 
+  const deleteExpense = async (id) => {
+    const expenseDoc = doc(db, "expenses", id)
+    await deleteDoc(expenseDoc)
+{ deleteExpense ? toast.success("Expense has been deleted successfully") : toast.error("Something went wrong")}
+  };
+
   return (
     <div className="allContainer">
       {expenses.map((expense) => {
@@ -27,24 +36,28 @@ function FetchData() {
               <h3 className="title">Item bought or Service paid for :</h3> {expense.title}
             </li>
             <li id="listGap">
-              <h3>Category: </h3> {expense.category}
+              <h3 className="title">Category: </h3> {expense.category}
             </li>
             <li id="listGap">
-              <h3>Amount GHc:</h3> {expense.expenseAmount}
+              <h3 className="title">Amount:</h3> <span> GHc: {expense.expenseAmount}</span>
             </li>
             <li id="listGap">
-              <h3>Reason for payment:</h3> {expense.notes}
+              <h3 className="title">Reason for payment:</h3> {expense.notes}
             </li>
             <li id="listGap">
               
-              <h3>
-                <h3>Date:</h3>
+              <h3 className="title">
+                Date:
               </h3>
               {expense.expenseDate}
             </li>
             <div className="twoButtons">
-            <button className="editButton">edit</button>
-            <button className="deleteButton">delete</button>
+            <button className="editButton">
+              <MdEdit />
+            </button>
+            <button className="deleteButton" onClick={() => {deleteExpense(expense.id)}}>
+              <RiDeleteBin6Line />
+            </button>
             </div>
           </ul>
         );
