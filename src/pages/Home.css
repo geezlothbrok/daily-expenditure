@@ -1,11 +1,11 @@
 .expenseListContainer {
     width: 35%; 
-    margin-left: 5px;
     margin-top: 10px;
+    background: #020420;
 }
 
 .headText {
-    background: #020420;
+    
     padding: 10px 20px;
     color: whitesmoke;
     margin-bottom: 20px;

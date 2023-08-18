@@ -16,6 +16,8 @@ import {
 import ShowOnLogin, { ShowOnLogedOut } from "../hiddenLink/HiddenLinks";
 
 
+
+
 function NavigationBar() {
   const [showMenu, setShowMenu] = useState(false);
   const [displayName, setDisplayName] = useState("");
