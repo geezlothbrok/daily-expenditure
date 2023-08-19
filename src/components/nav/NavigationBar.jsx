@@ -116,9 +116,11 @@ function NavigationBar() {
               </NavLink>
             </li>
             <li onClick={ hideMenu}>
+              <ShowOnLogin>
                 <NavLink to="/">
                 Home
               </NavLink>
+              </ShowOnLogin>
             </li>
             
             <li onClick={hideMenu}>

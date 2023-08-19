@@ -1,7 +1,7 @@
 /* .fixed {
-    width: 100%;
+    
     position: fixed;
-    top: 0;
+    
     transition: all 0.5s;
     z-index: 9;
   } */
@@ -12,6 +12,8 @@
     align-items: center;
     height: 5rem;
     background: linear-gradient(to right, #020420, #BB7DB3);
+    /* top: 0;
+    width: 100%; */
   }
   .logo {
     display: flex;

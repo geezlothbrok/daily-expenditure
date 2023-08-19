@@ -28,7 +28,7 @@ function FetchData() {
     };
 
     getAllExpenses();
-  }, []);
+  }, [expensesCollectionRef]);
 
   const deleteExpense = async (id) => {
     const expenseDoc = doc(db, "expenses", id);
@@ -43,6 +43,8 @@ function FetchData() {
   return (
     <div className="allContainer">
       {expenses.map((expense) => {
+        expense={expense}
+        
         return (
           <ul key={expense.id} className="lists">
             <li id="listGap">
@@ -64,7 +66,7 @@ function FetchData() {
               {expense.expenseDate}
             </li>
             <div className="twoButtons">
-              <button className="editButton"  onClick={handleShow}>
+              <button className="editButton" onClick={handleShow}>
                 <MdEdit />
               </button>
 
@@ -72,6 +74,7 @@ function FetchData() {
                 className="deleteButton"
                 onClick={() => {
                   deleteExpense(expense.id);
+                  
                 }}
               >
                 <RiDeleteBin6Line />
@@ -81,7 +84,7 @@ function FetchData() {
         );
       })}
 
-<Modal show={show} onHide={handleClose} size="lg"  aria-labelledby="example-modal-sizes-title-lg">
+<Modal show={show} onHide={handleClose} size="lg">
         <Modal.Header closeButton>
           <Modal.Title>EDIT EXPENSE</Modal.Title>
         </Modal.Header>
@@ -95,6 +98,8 @@ function FetchData() {
           
         </Modal.Footer>
       </Modal>
+
+
     </div>
   );
 }

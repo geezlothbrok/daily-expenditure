@@ -1,22 +1,23 @@
-import React, { useState } from 'react'
-import { toast } from 'react-toastify';
-import Loader from '../components/loader/Loader';
-import { useNavigate } from 'react-router-dom';
-import { addDoc, collection } from 'firebase/firestore';
-import { db } from '../firebase/config';
+import React from 'react';
+import { useState } from "react";
+import { toast } from "react-toastify";
+import Loader from "../components/loader/Loader";
+import { db } from "../firebase/config";
+import { setDoc, doc } from "firebase/firestore";
+import { useNavigate } from "react-router-dom";
 
-function UpdateExpenses() {
-    const [itemOrService, setItemOrService] = useState("");
+function UpdateExpenses({expense}) {
+
+  const [itemOrService, setItemOrService] = useState("");
   const [expenseDate, setExpenseDate] = useState("");
-  const [expenseAmount, setExpenseAmount] = useState(0);
+  const [expenseAmount, setExpenseAmount] = useState("");
   const [category, setCategory] = useState("");
   const [notes, setNotes] = useState("");
   const [isLoading, setIsLoading] = useState(false);
 
-  const expensesCollectionRef = collection(db, "expenses");
   const navigate = useNavigate();
 
-  const createAnExpense = async (e) => {
+  const handleUpdate = async (e) => {
     e.preventDefault();
 
      //VALIDATING ALL INPUT FIELDS
@@ -41,12 +42,12 @@ function UpdateExpenses() {
 
     //ADDING EXPENSES TO THE FIRESTORE DATA BASE
 
-    await addDoc(expensesCollectionRef, {
+    await setDoc(doc(db, "expenses", expense.id), {
       title: itemOrService,
       expenseDate,
       expenseAmount,
       notes,
-      category,
+      category
     });
     setIsLoading(true);
     toast.success("Today's expenses added successfully");
@@ -54,7 +55,7 @@ function UpdateExpenses() {
     navigate("/");
   };
   return (
-    <>
+    <div>
       {isLoading && <Loader />}
       <div className="addExpensesContainer">
         <h3 id="addTitle">Add Expenses</h3>
@@ -64,7 +65,7 @@ function UpdateExpenses() {
           <span> spent today</span>
         </div>
 
-        <form className="addExpenseForm" onSubmit={createAnExpense}>
+        <form className="addExpenseForm">
           <label>Item Purchased or Service</label>
           <input
             type="text"
@@ -89,7 +90,7 @@ function UpdateExpenses() {
             name="expenseAmount"
             inputMode="numeric"
             value={expenseAmount}
-            onChange={(e) => setExpenseAmount(Number(e.target.value))}
+            onChange={(e) => setExpenseAmount(e.target.value)}
           />
 
           <label>Note</label>
@@ -118,14 +119,13 @@ function UpdateExpenses() {
             <option value="utilities">Utilities</option>
             <option value="electronics">Electronics</option>
           </select>
-          <button type="submit" onClick={createAnExpense} id="submit">
+          <button type="submit" onClick={ () => {handleUpdate (expense.id)}} id="submit">
             S a v e
           </button>
         </form>
       </div>
-    </>
-  );
+    </div>
+  )
 }
-
 
 export default UpdateExpenses

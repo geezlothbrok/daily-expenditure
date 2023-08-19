@@ -11,7 +11,7 @@ import "./AddExpenditure.css"
 function AddExpenditure() {
   const [itemOrService, setItemOrService] = useState("");
   const [expenseDate, setExpenseDate] = useState("");
-  const [expenseAmount, setExpenseAmount] = useState(0);
+  const [expenseAmount, setExpenseAmount] = useState("");
   const [category, setCategory] = useState("");
   const [notes, setNotes] = useState("");
   const [isLoading, setIsLoading] = useState(false);
@@ -95,7 +95,7 @@ function AddExpenditure() {
             name="expenseAmount"
             inputMode="numeric"
             value={expenseAmount}
-            onChange={(e) => setExpenseAmount(Number(e.target.value))}
+            onChange={(e) => setExpenseAmount(e.target.value)}
           />
 
           <label>Note</label>
