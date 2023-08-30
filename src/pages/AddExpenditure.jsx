@@ -10,7 +10,7 @@ import "./AddExpenditure.css"
 
 function AddExpenditure() {
   const [itemOrService, setItemOrService] = useState("");
-  const [expenseDate, setExpenseDate] = useState("");
+  const [expenseDate, setExpenseDate] = useState(""); 
   const [expenseAmount, setExpenseAmount] = useState("");
   const [category, setCategory] = useState("");
   const [notes, setNotes] = useState("");

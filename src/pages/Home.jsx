@@ -1,4 +1,5 @@
 import React from 'react'
+import GetData from './GetData'
 
 
 function Home() {
@@ -6,7 +7,7 @@ function Home() {
     <>
     <div className='expenseListContainer'>
       <h1 className="headText">LIST OF ALL EXPENSES</h1>
-       hello
+      <GetData />
     </div>
     </>
   )
