@@ -100,6 +100,7 @@ function AddExpenditure() {
 
           <label>Note</label>
           <textarea
+          spellCheck={true}
             name="expenseNote"
             id=""
             cols="30"
