@@ -6,6 +6,7 @@ import MobileNavigation from './components/nav/MobileNavigation';
 import { ToastContainer,} from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import AddExpenditure from './pages/AddExpenditure';
+import Edit from './pages/Edit';
 
 function App() {
   return (
@@ -21,7 +22,7 @@ function App() {
         <Route path="/register" element={<Register />}/>
        <Route path="/reset" element={ <Reset />}/>
        <Route path="/addExpense" element={ <AddExpenditure />}/>
-       <Route path="/update/:id" element={ <AddExpenditure />}/>
+       {/* <Route path="/update/:id" element={ <Edit />}/> */}
       </Routes>
     </BrowserRouter>
     </>

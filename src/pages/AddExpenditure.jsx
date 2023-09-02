@@ -1,45 +1,33 @@
-import React, { useEffect } from "react";
+import React from 'react';
 import { useState } from "react";
 import { toast } from "react-toastify";
 import Loader from "../components/loader/Loader";
 import { db } from "../firebase/config";
-import { addDoc, collection, getDoc } from "firebase/firestore";
-import { useNavigate, useParams } from "react-router-dom";
+import { addDoc, collection } from "firebase/firestore";
+import { useNavigate } from "react-router-dom";
 
 import "./AddExpenditure.css"
 
+const expenseDetails = {
+    itemOrService: "",
+    expenseAmount: "",
+    expenseDate: "",
+    notes: "",
+    category: "",
+  }
+
 function AddExpenditure() {
-  const [itemOrService, setItemOrService] = useState("");
-  const [expenseDate, setExpenseDate] = useState(""); 
-  const [expenseAmount, setExpenseAmount] = useState("");
-  const [category, setCategory] = useState("");
-  const [notes, setNotes] = useState("");
+
+  const [expenses, setExpense] = useState(expenseDetails);
+  const {itemOrService, expenseAmount, expenseDate, notes, category} = expenses;
   const [isLoading, setIsLoading] = useState(false);
 
-  // const state = {
-  //   setItemOrService,
-  //   setExpenseDate,
-  //   setExpenseAmount,
-  //   setCategory,
-  //   setNotes
-  // };
+  const handleChange = (e) => { 
+    setExpense({...expenses, [e.target.name]: e.target.value})
+  };
 
   const expensesCollectionRef = collection(db, "expenses");
   const navigate = useNavigate();
-  const {id} = useParams();
-
-  // useEffect(() => {
-  //   id && getSingleExpense();
-  // },[id]);
-
-  // const getSingleExpense = async () => {
-  //   const snapshot = await getDoc(expensesCollectionRef);
-  //   if(snapshot.exists()) {
-  //     state({ ...snapshot.data()})
-  //   }
-  // }
-
-  
 
   const createAnExpense = async (e) => {
     e.preventDefault();
@@ -64,10 +52,10 @@ function AddExpenditure() {
     
     setIsLoading(true);
 
-    //ADDING EXPENSES TO THE FIRESTORE DATA BASE
+    //ADDING EXPENSES TO THE FIRESTORE DATABASE
 
     await addDoc(expensesCollectionRef, {
-      title: itemOrService,
+      title: itemOrService, 
       expenseDate,
       expenseAmount,
       notes,
@@ -79,8 +67,10 @@ function AddExpenditure() {
     navigate("/");
   };
 
+  
   return (
-    <>
+    
+      <>
       {isLoading && <Loader />}
       <div className="addExpensesContainer">
         <h3 id="addTitle">Add Expenses</h3>
@@ -98,7 +88,7 @@ function AddExpenditure() {
             placeholder="Please key in your purchased item or services here"
             inputMode="text"
             value={itemOrService}
-            onChange={(e) => setItemOrService(e.target.value)}
+            onChange={handleChange}
           />
 
           <label>Date</label>
@@ -106,7 +96,7 @@ function AddExpenditure() {
             type="date"
             name="expenseDate"
             value={expenseDate}
-            onChange={(e) => setExpenseDate(e.target.value)}
+            onChange={handleChange}
           />
 
           <label>Amount GHc</label>
@@ -115,22 +105,23 @@ function AddExpenditure() {
             name="expenseAmount"
             inputMode="numeric"
             value={expenseAmount}
-            onChange={(e) => setExpenseAmount(e.target.value)}
+            onChange={handleChange}
           />
 
           <label>Note</label>
           <textarea
+          className="textArea"
           spellCheck={true}
-            name="expenseNote"
+            name="notes"
             id=""
             cols="30"
             rows="10"
             placeholder="Add your Notes here..."
             value={notes}
-            onChange={(e) => setNotes(e.target.value)}
+            onChange={handleChange}
           ></textarea>
 
-          <select name="category" value={category} onChange={(e) => setCategory(e.target.value)} >
+          <select name="category" value={category} onChange={handleChange} >
             <option value="" disabled>
               Choose Category
             </option>
@@ -151,7 +142,8 @@ function AddExpenditure() {
         </form>
       </div>
     </>
-  );
+   
+  )
 }
 
-export default AddExpenditure;
+export default AddExpenditure

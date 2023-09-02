@@ -7,7 +7,7 @@ function Home() {
     <>
     <div className='expenseListContainer'>
       <h1 className="headText">LIST OF ALL EXPENSES</h1>
-      <GetData />
+      {/* <GetData /> */}
     </div>
     </>
   )
