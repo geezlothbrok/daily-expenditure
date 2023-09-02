@@ -1,15 +1,17 @@
 import React, { useEffect, useState } from 'react'
 import { collection, getDocs } from "firebase/firestore";
 import { db } from '../firebase/config';
-import { toast } from 'react-toastify';
 import Table from 'react-bootstrap/Table';
 import Loader from '../components/loader/Loader';
+import { useNavigate } from 'react-router-dom';
 
 function GetData() {
   const [expense, setExpense] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
 
   const expensesCollectionRef = collection(db, "expenses"); 
+
+  const navigate = useNavigate();
 
    
 
@@ -49,8 +51,8 @@ function GetData() {
         <td>GHc { " " + expense.expenseAmount}</td>
         <td>{expense.notes}</td>
         <td>{expense.expenseDate}</td> 
-        <button>del</button>
-        <button>Up</button>
+        <button onClick={() => navigate(`/update/${expense.id}`)}>Up</button>
+        <button>view</button>
       </tr>
      
       ))}

@@ -1,10 +1,10 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useState } from "react";
 import { toast } from "react-toastify";
 import Loader from "../components/loader/Loader";
 import { db } from "../firebase/config";
-import { addDoc, collection } from "firebase/firestore";
-import { useNavigate } from "react-router-dom";
+import { addDoc, collection, getDoc } from "firebase/firestore";
+import { useNavigate, useParams } from "react-router-dom";
 
 import "./AddExpenditure.css"
 
@@ -16,8 +16,28 @@ function AddExpenditure() {
   const [notes, setNotes] = useState("");
   const [isLoading, setIsLoading] = useState(false);
 
+  // const state = {
+  //   setItemOrService,
+  //   setExpenseDate,
+  //   setExpenseAmount,
+  //   setCategory,
+  //   setNotes
+  // };
+
   const expensesCollectionRef = collection(db, "expenses");
   const navigate = useNavigate();
+  const {id} = useParams();
+
+  // useEffect(() => {
+  //   id && getSingleExpense();
+  // },[id]);
+
+  // const getSingleExpense = async () => {
+  //   const snapshot = await getDoc(expensesCollectionRef);
+  //   if(snapshot.exists()) {
+  //     state({ ...snapshot.data()})
+  //   }
+  // }
 
   
 
