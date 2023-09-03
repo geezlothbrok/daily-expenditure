@@ -11,6 +11,7 @@ import { toast } from "react-toastify";
 
 function GetData() {
   const [expense, setExpense] = useState([]);
+  const [expenditure, setExpenditure] = useState({});
   const [isLoading, setIsLoading] = useState(false);
 
   const expensesCollectionRef = collection(db, "expenses");
@@ -20,7 +21,11 @@ function GetData() {
   const [show, setShow] = useState(false);
 
   const handleClose = () => setShow(false);
-  const handleShow = () => setShow(true);
+
+  const handleShow = (expense) => {
+    setShow(true);
+    setExpenditure(expense);
+  };
 
   useEffect(() => {
     setIsLoading(true);
@@ -66,21 +71,28 @@ function GetData() {
                 <td>{expense.expenseDate}</td>
                 
                 <button onClick= {(() => navigate(`/update/${expense.id}`))}>Up</button>
-                <button>view</button>
+
+                <button onClick= {(() => handleShow(expense))}>view</button>
               </tr>
             ))}
         </tbody>
       </Table>
 
-      {/* <Modal show={show} onHide={handleClose} size="lg">
+      <Modal show={show} onHide={handleClose} size="lg">
         <Modal.Header closeButton>
-          <Modal.Title>EDIT EXPENSE</Modal.Title>
+          <Modal.Title></Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          <Edit />
+         {show && (
+           <Edit 
+           {...expenditure} 
+           />
+         )}
         </Modal.Body>
-        
-      </Modal> */}
+        <Modal.Footer>
+          <Button variant="danger">Delete</Button>
+        </Modal.Footer>
+      </Modal>
     </div>
   );
 }

@@ -39,7 +39,6 @@ function AddExpenditure() {
     const snapshot = await getDoc(docRef);
     if (snapshot.exists()) {
       setExpense({...snapshot.data()});
-      console.log(snapshot.data())
     }
   }
 

@@ -23,6 +23,7 @@ function App() {
        <Route path="/reset" element={ <Reset />}/>
        <Route path="/addExpense" element={ <AddExpenditure />}/>
        <Route path="/update/:id" element={ <AddExpenditure />}/>
+       <Route path="/edit" element={ <Edit />}/>
       </Routes>
     </BrowserRouter>
     </>
