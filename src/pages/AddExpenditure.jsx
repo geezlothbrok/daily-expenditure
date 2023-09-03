@@ -1,10 +1,10 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useState } from "react";
 import { toast } from "react-toastify";
 import Loader from "../components/loader/Loader";
 import { db } from "../firebase/config";
-import { addDoc, collection } from "firebase/firestore";
-import { useNavigate } from "react-router-dom";
+import { addDoc, collection, doc, getDoc, serverTimestamp, updateDoc } from "firebase/firestore";
+import { useNavigate, useParams } from "react-router-dom";
 
 import "./AddExpenditure.css"
 
@@ -28,6 +28,20 @@ function AddExpenditure() {
 
   const expensesCollectionRef = collection(db, "expenses");
   const navigate = useNavigate();
+  const {id} = useParams();
+
+  useEffect(() => {
+    id && getSingleExpense();
+  }, [id])
+
+  const getSingleExpense = async () => {
+    const docRef = doc(db, "expenses", id);
+    const snapshot = await getDoc(docRef);
+    if (snapshot.exists()) {
+      setExpense({...snapshot.data()});
+      console.log(snapshot.data())
+    }
+  }
 
   const createAnExpense = async (e) => {
     e.preventDefault();
@@ -54,13 +68,28 @@ function AddExpenditure() {
 
     //ADDING EXPENSES TO THE FIRESTORE DATABASE
 
-    await addDoc(expensesCollectionRef, {
-      title: itemOrService, 
-      expenseDate,
-      expenseAmount,
-      notes,
-      category,
-    });
+    if (!id) {
+      try {
+        await addDoc(expensesCollectionRef, {
+          ...expenses,   
+          timestamp: serverTimestamp()
+        });
+      } catch (error) {
+        console.log(error);
+      }
+      
+    } else {
+      try {
+        await updateDoc(doc(db, "expenses", id), {
+         ...expenses,
+          timestamp: serverTimestamp()
+        });
+      } catch (error) {
+        console.log(error);
+      }
+    }
+
+    
     setIsLoading(true);
     toast.success("Today's expenses added successfully");
     setIsLoading(false)
@@ -73,12 +102,12 @@ function AddExpenditure() {
       <>
       {isLoading && <Loader />}
       <div className="addExpensesContainer">
-        <h3 id="addTitle">Add Expenses</h3>
+        <h3 id="addTitle">{id ? "Edit Expense" : "Add Expenses"}</h3>
 
-        <div className="expensesTotal">
+        {!id ? <div className="expensesTotal">
           <h5>GHc 300. 00</h5>
           <span> spent today</span>
-        </div>
+        </div> : "" }
 
         <form className="addExpenseForm" onSubmit={createAnExpense}>
           <label>Item Purchased or Service</label>
@@ -93,6 +122,7 @@ function AddExpenditure() {
 
           <label>Date</label>
           <input
+          required
             type="date"
             name="expenseDate"
             value={expenseDate}
@@ -101,6 +131,7 @@ function AddExpenditure() {
 
           <label>Amount GHc</label>
           <input
+          required
             type="number"
             name="expenseAmount"
             inputMode="numeric"
@@ -110,6 +141,7 @@ function AddExpenditure() {
 
           <label>Note</label>
           <textarea
+          required
           className="textArea"
           spellCheck={true}
             name="notes"
@@ -121,7 +153,7 @@ function AddExpenditure() {
             onChange={handleChange}
           ></textarea>
 
-          <select name="category" value={category} onChange={handleChange} >
+          <select required name="category" value={category} onChange={handleChange} >
             <option value="" disabled>
               Choose Category
             </option>

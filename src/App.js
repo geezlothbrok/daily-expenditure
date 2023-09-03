@@ -22,7 +22,7 @@ function App() {
         <Route path="/register" element={<Register />}/>
        <Route path="/reset" element={ <Reset />}/>
        <Route path="/addExpense" element={ <AddExpenditure />}/>
-       {/* <Route path="/update/:id" element={ <Edit />}/> */}
+       <Route path="/update/:id" element={ <AddExpenditure />}/>
       </Routes>
     </BrowserRouter>
     </>
