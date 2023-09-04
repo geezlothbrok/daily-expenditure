@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { collection, getDocs } from "firebase/firestore";
+import { collection, deleteDoc, doc, getDocs } from "firebase/firestore";
 import { db } from "../firebase/config";
 import Table from "react-bootstrap/Table";
 import Loader from "../components/loader/Loader";
@@ -9,7 +9,7 @@ import Modal from "react-bootstrap/Modal";
 import Edit from "./Edit";
 import { toast } from "react-toastify";
 
-function GetData() {
+function GetData({id}) {
   const [expense, setExpense] = useState([]);
   const [expenditure, setExpenditure] = useState({});
   const [isLoading, setIsLoading] = useState(false);
@@ -17,6 +17,8 @@ function GetData() {
   const expensesCollectionRef = collection(db, "expenses");
 
   const navigate = useNavigate();
+
+ 
 
   const [show, setShow] = useState(false);
 
@@ -27,16 +29,28 @@ function GetData() {
     setExpenditure(expense);
   };
 
+  const handleDelete = async (id) => {
+    if (window.confirm("Are you sure you want to delete this expenditure?")) {
+      try {
+        setShow(false);
+        await deleteDoc(doc(db, "expenses", id));
+        // setExpense(expense.filter((expenditure) => expenditure.id !== id))
+      } catch (err) {
+        console.log(err);
+      }
+    }
+  };
+
   useEffect(() => {
     setIsLoading(true);
     const getAllExpenses = async () => {
       const data = await getDocs(expensesCollectionRef);
       setExpense(data.docs.map((doc) => ({ ...doc.data(), id: doc.id })));
       
-
+ console.log(expense.id);
       setIsLoading(false);
       
-    
+   
     };
   
 
@@ -85,12 +99,13 @@ function GetData() {
         <Modal.Body>
          {show && (
            <Edit 
+          
            {...expenditure} 
            />
          )}
         </Modal.Body>
         <Modal.Footer>
-          <Button variant="danger">Delete</Button>
+          <Button variant="danger" onClick={() => handleDelete(id) }>Delete</Button>
         </Modal.Footer>
       </Modal>
     </div>
