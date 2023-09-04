@@ -8,8 +8,9 @@ import Button from "react-bootstrap/Button";
 import Modal from "react-bootstrap/Modal";
 import Edit from "./Edit";
 import { toast } from "react-toastify";
+import { ImBin } from "react-icons/im";
 
-function GetData({id}) {
+function GetData() {
   const [expense, setExpense] = useState([]);
   const [expenditure, setExpenditure] = useState({});
   const [isLoading, setIsLoading] = useState(false);
@@ -34,7 +35,7 @@ function GetData({id}) {
       try {
         setShow(false);
         await deleteDoc(doc(db, "expenses", id));
-        // setExpense(expense.filter((expenditure) => expenditure.id !== id))
+        setExpense(expense.filter((expenditure) => expenditure.id !== id))
       } catch (err) {
         console.log(err);
       }
@@ -87,6 +88,12 @@ function GetData({id}) {
                 <button onClick= {(() => navigate(`/update/${expense.id}`))}>Up</button>
 
                 <button onClick= {(() => handleShow(expense))}>view</button>
+                <button onClick={() => {
+                  handleDelete(expense.id);
+                  
+                }}>
+                  <ImBin />
+                </button>
               </tr>
             ))}
         </tbody>
@@ -105,7 +112,7 @@ function GetData({id}) {
          )}
         </Modal.Body>
         <Modal.Footer>
-          <Button variant="danger" onClick={() => handleDelete(id) }>Delete</Button>
+          
         </Modal.Footer>
       </Modal>
     </div>
