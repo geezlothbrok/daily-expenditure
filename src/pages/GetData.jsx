@@ -4,11 +4,10 @@ import { db } from "../firebase/config";
 import Table from "react-bootstrap/Table";
 import Loader from "../components/loader/Loader";
 import { useNavigate } from "react-router-dom";
-import Button from "react-bootstrap/Button";
 import Modal from "react-bootstrap/Modal";
 import Edit from "./Edit";
-import { toast } from "react-toastify";
 import { ImBin } from "react-icons/im";
+import { BiSolidPencil } from "react-icons/bi";
 
 function GetData() {
   const [expense, setExpense] = useState([]);
@@ -36,6 +35,7 @@ function GetData() {
         setShow(false);
         await deleteDoc(doc(db, "expenses", id));
         setExpense(expense.filter((expenditure) => expenditure.id !== id))
+        console.log(expenditure);
       } catch (err) {
         console.log(err);
       }
@@ -48,7 +48,6 @@ function GetData() {
       const data = await getDocs(expensesCollectionRef);
       setExpense(data.docs.map((doc) => ({ ...doc.data(), id: doc.id })));
       
- console.log(expense.id);
       setIsLoading(false);
       
    
@@ -85,7 +84,9 @@ function GetData() {
                 <td>{expense.notes}</td>
                 <td>{expense.expenseDate}</td>
                 
-                <button onClick= {(() => navigate(`/update/${expense.id}`))}>Up</button>
+                <button onClick= {(() => navigate(`/update/${expense.id}`))}>
+                  <BiSolidPencil />
+                </button>
 
                 <button onClick= {(() => handleShow(expense))}>view</button>
                 <button onClick={() => {

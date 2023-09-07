@@ -1,0 +1,8 @@
+.mainContainer {
+    display: flex;
+}
+
+.listContainer {
+    width: 50%;
+    background: red;
+}
