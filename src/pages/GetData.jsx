@@ -35,7 +35,6 @@ function GetData() {
         setShow(false);
         await deleteDoc(doc(db, "expenses", id));
         setExpense(expense.filter((expenditure) => expenditure.id !== id))
-        console.log(expenditure);
       } catch (err) {
         console.log(err);
       }
